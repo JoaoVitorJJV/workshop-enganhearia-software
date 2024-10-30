@@ -19,7 +19,7 @@ pipeline {
                             -Dsonar.projectKey=JoaoVitorJJV_workshop-enganhearia-software_0dc54c20-8c82-4768-9052-66ea94aa80d7 \
                             -Dsonar.projectName=workshop-enganhearia-software \
                             -Dsonar.projectVersion=1.0.0 \
-                            -Dsonar.sources=."
+                            -Dsonar.sources=. "
                     }
                 }
             }
