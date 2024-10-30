@@ -2,13 +2,6 @@ pipeline {
     agent any  // Executa em qualquer nó disponível
 
     stages {
-        stage('Build') {
-            steps {
-                echo 'Executando Build...'
-                sh 'npm install'
-            }
-        }
-
         stage('SonarQube Analysis') {
             environment {
                 scannerHome = tool 'SonarScanner'
@@ -17,6 +10,13 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Executando Build...'
+                sh 'npm install'
             }
         }
 
