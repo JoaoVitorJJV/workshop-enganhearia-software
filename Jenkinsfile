@@ -1,43 +1,27 @@
 pipeline {
-    agent any  // Executa em qualquer nó disponível
+    agent any
 
     stages {
-        stage('SonarQube Analysis') {
+        stage('Fetch Code') {
+            steps {
+                git 'https://github.com/JoaoVitorJJV/workshop-enganhearia-software'
+            }
+        }
+        stage('Code Analysis') {
             environment {
-                scannerHome = tool 'SonarScanner'
+                scannerHome = tool 'Sonar'
             }
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                script {
+                    withSonarQubeEnv('Sonar') {
+                        sh "${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=JoaoVitorJJV_workshop-enganhearia-software_0dc54c20-8c82-4768-9052-66ea94aa80d7 \
+                            -Dsonar.projectName=workshop-enganhearia-software \
+                            -Dsonar.projectVersion=1.0.0 \
+                            -Dsonar.sources=."
+                    }
                 }
             }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Executando Build...'
-                sh 'npm install'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Executando Testes...'
-                sh 'npm test'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Fazendo Deploy...'
-            }
-        }
-    }
-
-
-    post {
-        always {
-            echo 'Pipeline concluído!'
         }
     }
 }
