@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Fetch Code') {
             steps {
-                git 'https://github.com/JoaoVitorJJV/workshop-enganhearia-software'
+                git branch: 'main',
+                    url: 'https://github.com/JoaoVitorJJV/workshop-enganhearia-software'
             }
         }
         stage('Code Analysis') {
